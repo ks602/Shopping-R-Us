@@ -17,6 +17,6 @@ public class Catalogue {
         Product product = productMap.get(sku);
         if (product == null)
             System.out.println("Failed");
-        return new Product(product.getSku(), product.getName(), product.getPrice());
+        return new Product(product.getSku(), product.getName(), product.getPriceString());
     }
 }

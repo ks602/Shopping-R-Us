@@ -20,7 +20,7 @@ public class BundlePricingRule implements PricingRule {
     public void apply(Cart cart) {
         int payCount = cart.filterCart(bundlePay).size();
         List<Product> freeProducts = cart.filterCart(bundleFree);
-        
+
         for (int i = 0; i < payCount; ++i) {
             if (i >= freeProducts.size())
                 break;

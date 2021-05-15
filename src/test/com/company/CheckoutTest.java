@@ -1,10 +1,14 @@
 package com.company;
 
 import com.company.Stock.SKU;
+
+import static com.company.Stock.SKU.*;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -25,14 +29,15 @@ class CheckoutTest {
         Checkout co = new Checkout(pricingRules);
         co.setStore(store);
 
-        co.scan(SKU.ATV);
-        co.scan(SKU.ATV);
-        co.scan(SKU.ATV);
-        co.scan(SKU.VGA);
+        co.scan(ATV);
+        co.scan(ATV);
+        co.scan(ATV);
+        co.scan(VGA);
 
-        double totalPrice = co.total();
+        BigDecimal totalPrice = co.total();
+        BigDecimal correctSum = new BigDecimal("249.0").setScale(Precision.scale, Precision.rMode);
 
-        assertEquals(totalPrice, 249.0);
+        assertEquals(correctSum, totalPrice);
     }
 
     @Test
@@ -40,17 +45,18 @@ class CheckoutTest {
         Checkout co = new Checkout(pricingRules);
         co.setStore(store);
 
-        co.scan(SKU.ATV);
-        co.scan(SKU.IPD);
-        co.scan(SKU.IPD);
-        co.scan(SKU.ATV);
-        co.scan(SKU.IPD);
-        co.scan(SKU.IPD);
-        co.scan(SKU.IPD);
+        co.scan(ATV);
+        co.scan(IPD);
+        co.scan(IPD);
+        co.scan(ATV);
+        co.scan(IPD);
+        co.scan(IPD);
+        co.scan(IPD);
 
-        double totalPrice = co.total();
+        BigDecimal totalPrice = co.total();
+        BigDecimal correctSum = new BigDecimal("2718.95").setScale(Precision.scale, Precision.rMode);
 
-        assertEquals(totalPrice, 2718.95);
+        assertEquals(correctSum, totalPrice);
     }
 
     @Test
@@ -58,13 +64,14 @@ class CheckoutTest {
         Checkout co = new Checkout(pricingRules);
         co.setStore(store);
 
-        co.scan(SKU.MBP);
-        co.scan(SKU.VGA);
-        co.scan(SKU.IPD);
+        co.scan(MBP);
+        co.scan(VGA);
+        co.scan(IPD);
 
-        double totalPrice = co.total();
+        BigDecimal totalPrice = co.total();
+        BigDecimal correctSum = new BigDecimal("1949.98").setScale(Precision.scale, Precision.rMode);
 
-        assertEquals(totalPrice, 1949.98);
+        assertEquals(correctSum, totalPrice);
     }
 
     @Test
@@ -72,12 +79,27 @@ class CheckoutTest {
         Checkout co = new Checkout(pricingRules);
         co.setStore(store);
 
-        co.scan(SKU.VGA);
-        co.scan(SKU.MBP);
-        co.scan(SKU.IPD);
+        co.scan(VGA);
+        co.scan(MBP);
+        co.scan(IPD);
 
-        double totalPrice = co.total();
+        BigDecimal totalPrice = co.total();
+        BigDecimal correctSum = new BigDecimal("1949.98").setScale(Precision.scale, Precision.rMode);
 
-        assertEquals(totalPrice, 1949.98);
+        assertEquals(correctSum, totalPrice);
+    }
+
+    @Test
+    public void PrecisionTest() {
+        Checkout co = new Checkout(pricingRules);
+        co.setStore(store);
+
+        for (int i = 0; i < 9999; ++i)
+            co.scan(IPD);
+
+        BigDecimal totalPrice = co.total();
+        BigDecimal correctSum = new BigDecimal("4999400.01").setScale(Precision.scale, Precision.rMode);
+
+        assertEquals(correctSum, totalPrice);
     }
 }

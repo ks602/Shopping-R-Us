@@ -3,7 +3,7 @@ package com.company;
 import com.company.Stock.Product;
 import com.company.Stock.SKU;
 
-import java.util.HashMap;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +11,7 @@ public class Checkout {
 
     private final Cart cart = new Cart();
     private Store store;
-    private Map<SKU, List<PricingRule>> pricingRules;
+    private final Map<SKU, List<PricingRule>> pricingRules;
 
     public Checkout(Map<SKU, List<PricingRule>> pricingRules) {
         this.pricingRules = pricingRules;
@@ -34,7 +34,7 @@ public class Checkout {
                 rule.apply(cart);
     }
 
-    public double total() {
+    public BigDecimal total() {
         return cart.totalAmount();
     }
 }

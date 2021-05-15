@@ -5,6 +5,7 @@ import com.company.PricingRule;
 import com.company.Stock.Product;
 import com.company.Stock.SKU;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class XForYPricingRule implements PricingRule {
@@ -25,7 +26,7 @@ public class XForYPricingRule implements PricingRule {
         List<Product> productList = cart.filterCart(productSKU);
         int productListSize = productList.size();
         for (int i = productListSize - 1; i >= 0; --i) {
-            if (productList.get(i).getPrice() == 0)
+            if (productList.get(i).getPrice().equals(new BigDecimal("0")))
                 break;
             count++;
         }

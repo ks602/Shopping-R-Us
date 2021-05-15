@@ -2,18 +2,16 @@ package com.company;
 
 import com.company.Stock.SKU;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class Main {
 
 
     public static void main(String[] args) {
-        Store store = new Store();
-        Checkout co = new Checkout(store.getPricingRules());
-        co.setStore(store);
-
-        co.scan(SKU.VGA);
-        co.scan(SKU.MBP);
-        co.scan(SKU.IPD);
-        double totalPrice = co.total();
-        System.out.println(totalPrice);
+        double sum = 0;
+        for (int i = 0; i < 9999; ++i)
+            sum += 499.99;
+        System.out.println(sum);
     }
 }

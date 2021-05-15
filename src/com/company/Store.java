@@ -16,10 +16,10 @@ public class Store {
     private final Map<SKU, List<PricingRule>> pricingRules = new HashMap<>();
 
     public Store() {
-        catalogue.addToCatalogue(new Product(SKU.IPD, "Super iPad", 549.99));
-        catalogue.addToCatalogue(new Product(SKU.MBP, "MacBook Pro", 1399.99));
-        catalogue.addToCatalogue(new Product(SKU.ATV, "Apple TV", 109.50));
-        catalogue.addToCatalogue(new Product(SKU.VGA, "VGA Adapter", 30.00));
+        catalogue.addToCatalogue(new Product(SKU.IPD, "Super iPad", "549.99"));
+        catalogue.addToCatalogue(new Product(SKU.MBP, "MacBook Pro", "1399.99"));
+        catalogue.addToCatalogue(new Product(SKU.ATV, "Apple TV", "109.50"));
+        catalogue.addToCatalogue(new Product(SKU.VGA, "VGA Adapter", "30.00"));
 
         List<PricingRule> ATVRules = new ArrayList<>();
         ATVRules.add(new XForYPricingRule(SKU.ATV, 3, 2));
