@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CheckoutTest {
     private static Store store;
     private static Map<SKU, List<PricingRule>> pricingRules;
+    private static Checkout co;
 
     @BeforeAll
     static void setUp() {
@@ -24,11 +25,14 @@ class CheckoutTest {
         pricingRules = store.getPricingRules();
     }
 
+    @BeforeEach
+    void setCo() {
+        co = new Checkout(pricingRules);
+        co.setStore(store);
+    }
+
     @Test
     public void ATVXForYTest() {
-        Checkout co = new Checkout(pricingRules);
-        co.setStore(store);
-
         co.scan(ATV);
         co.scan(ATV);
         co.scan(ATV);
@@ -42,9 +46,6 @@ class CheckoutTest {
 
     @Test
     public void IPDBulkTest() {
-        Checkout co = new Checkout(pricingRules);
-        co.setStore(store);
-
         co.scan(ATV);
         co.scan(IPD);
         co.scan(IPD);
@@ -61,9 +62,6 @@ class CheckoutTest {
 
     @Test
     public void MBPVGABundleTest() {
-        Checkout co = new Checkout(pricingRules);
-        co.setStore(store);
-
         co.scan(MBP);
         co.scan(VGA);
         co.scan(IPD);
@@ -76,9 +74,6 @@ class CheckoutTest {
 
     @Test
     public void VGAMBPBundleTest() {
-        Checkout co = new Checkout(pricingRules);
-        co.setStore(store);
-
         co.scan(VGA);
         co.scan(MBP);
         co.scan(IPD);
@@ -91,9 +86,6 @@ class CheckoutTest {
 
     @Test
     public void PrecisionTest() {
-        Checkout co = new Checkout(pricingRules);
-        co.setStore(store);
-
         for (int i = 0; i < 9999; ++i)
             co.scan(IPD);
 
@@ -101,5 +93,12 @@ class CheckoutTest {
         BigDecimal correctSum = new BigDecimal("4999400.01").setScale(Precision.scale, Precision.rMode);
 
         assertEquals(correctSum, totalPrice);
+    }
+
+    @Test
+    public void NullSKUTest() {
+        assertThrows(RuntimeException.class, () -> {
+            co.scan(null);
+        });
     }
 }
